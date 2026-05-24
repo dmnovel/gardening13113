@@ -1002,7 +1002,18 @@ function renderDateListInline(){
     btn.setAttribute('aria-pressed',String(isSelected));
     btn.innerHTML=`<span>${isSelected?'✓ ':''}${date}</span>`;
     btn.addEventListener('click',()=>{
-      state.selectedHistoryDate=isSelected?'':date;
+      if(isSelected){
+        state.selectedHistoryDate='';
+        state.showDateList=true;
+        state.showFavorites=false;
+        document.body.classList.add('date-list-mode');
+        document.body.classList.remove('favorite-mode');
+        applyFilters();
+        renderDateListInline();
+        updateBottomTabs();
+        return;
+      }
+      state.selectedHistoryDate=date;
       state.showDateList=false;
       state.showFavorites=false;
       document.body.classList.remove('date-list-mode','favorite-mode');
@@ -1063,7 +1074,7 @@ async function __dmLoadPackedJson(url){
   return JSON.parse(new TextDecoder().decode(out));
 }
 
-async function init(){bindEvents();document.body.classList.toggle('view-card',state.viewMode==='card');document.body.classList.toggle('view-list',state.viewMode!=='card');updateViewButtons();document.body.classList.toggle("favorite-mode",state.showFavorites);document.body.classList.toggle("date-list-mode",state.showDateList);updateBottomTabs();setDetailCollapsed(window.matchMedia('(max-width:980px)').matches);try{const data=await __dmLoadPackedJson('./w_6a3856af8376a780d708.json');if(!Array.isArray(data))throw new Error('데이터 형식이 배열이 아닙니다.');state.items=data.map(normalizeItem);populateDiscountOptions();populateDateYearFilter();state.filtered=[...state.items];applyFilters()}catch(err){els.error.textContent='데이터를 불러오지 못했습니다. index.html과 데이터 파일을 같은 위치에 올려주세요.';els.error.classList.remove('hidden');console.error(err)}}
+async function init(){bindEvents();document.body.classList.toggle('view-card',state.viewMode==='card');document.body.classList.toggle('view-list',state.viewMode!=='card');updateViewButtons();document.body.classList.toggle("favorite-mode",state.showFavorites);document.body.classList.toggle("date-list-mode",state.showDateList);updateBottomTabs();setDetailCollapsed(window.matchMedia('(max-width:980px)').matches);try{const data=await __dmLoadPackedJson('./w_558749b75f36030975d0.json');if(!Array.isArray(data))throw new Error('데이터 형식이 배열이 아닙니다.');state.items=data.map(normalizeItem);populateDiscountOptions();populateDateYearFilter();state.filtered=[...state.items];applyFilters()}catch(err){els.error.textContent='데이터를 불러오지 못했습니다. index.html과 데이터 파일을 같은 위치에 올려주세요.';els.error.classList.remove('hidden');console.error(err)}}
 init();
 </script>
 
