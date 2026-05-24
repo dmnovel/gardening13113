@@ -1,2 +1,2 @@
-업로드 파일: index.html, w_7bcc9578d981e9e88ee2.json
-manifest.webmanifest는 기존 파일을 그대로 같이 두세요.
+업로드 파일: index.html, w_6a3856af8376a780d708.json
+기존 manifest.webmanifest도 같은 위치에 두세요.
